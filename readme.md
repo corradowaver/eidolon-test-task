@@ -1,7 +1,25 @@
 ## Eidolon test task
 
 Task: _https://minio.eidoloncorp.com/custom/hr/test-assignment-scala-backend.html_
- 
+
+---
+Build & run:
+
+* Spin up docker
+```
+docker-compose up -d
+```
+* Do flyway migrations
+```
+./gradlew -Pflyway.configFiles=migrations/environments/test.conf flywayMigrate
+```
+* Run application
+```
+./gradlew bootRun
+```
+
+---
+
 REST Endpoints: 
 
 ---
