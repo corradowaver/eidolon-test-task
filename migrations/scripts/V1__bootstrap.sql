@@ -1,4 +1,4 @@
-CREATE TABLE shortcuts (
+CREATE TABLE shortcut (
     id           BIGSERIAL  NOT NULL PRIMARY KEY,
     binding      TEXT       NOT NULL,
     description  TEXT       NOT NULL,
@@ -6,4 +6,4 @@ CREATE TABLE shortcuts (
     action       TEXT       NOT NULL
 );
 
-CREATE UNIQUE INDEX udx_shortcuts_on_category ON shortcuts USING btree (category);
+CREATE INDEX udx_shortcut_on_category ON shortcut USING btree (category);
