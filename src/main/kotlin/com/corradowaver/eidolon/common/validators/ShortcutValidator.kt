@@ -4,6 +4,7 @@ import com.corradowaver.eidolon.api.dto.ShortcutAddRequestDTO
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.InvalidActionPatternException
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.InvalidBindingPatternException
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.WrongServiceKeyFoundInBindingException
+import org.slf4j.LoggerFactory
 
 private const val BINDING_DELIMITER = "+"
 private val SERVICE_KEYS = listOf("Ctrl", "Alt", "Shift").map { it.uppercase() }
@@ -22,6 +23,8 @@ private val BINDING_REGEX = Regex("([a-zA-Z]+\\s?\\+\\s?){1,3}([A-Z])")
  */
 private val ACTION_REGEX = Regex("([a-z]+\\.[a-z]+)")
 
+private val logger = LoggerFactory.getLogger("ShortcutValidator")
+
 fun ShortcutAddRequestDTO.validate() =
     this.apply {
         validateBinding()
@@ -29,14 +32,23 @@ fun ShortcutAddRequestDTO.validate() =
     }
 
 private fun ShortcutAddRequestDTO.validateBinding() {
-    if (!this.binding.matches(BINDING_REGEX)) throw InvalidBindingPatternException()
+    if (!this.binding.matches(BINDING_REGEX)) {
+        logger.error("Validation failed for $this, invalid binding pattern")
+        throw InvalidBindingPatternException()
+    }
     val serviceKeys = this.binding
         .replace(" ", "")
         .split(BINDING_DELIMITER)
         .dropLast(1)
-    if (serviceKeys.any { it.uppercase() !in SERVICE_KEYS }) throw WrongServiceKeyFoundInBindingException()
+    if (serviceKeys.any { it.uppercase() !in SERVICE_KEYS }) {
+        logger.error("Validation failed for $this, wrong service key found in binding")
+        throw WrongServiceKeyFoundInBindingException()
+    }
 }
 
 private fun ShortcutAddRequestDTO.validateAction() {
-    if (!this.action.matches(ACTION_REGEX)) throw InvalidActionPatternException()
+    if (!this.action.matches(ACTION_REGEX)) {
+        logger.error("Validation failed for $this, invalid action pattern")
+        throw InvalidActionPatternException()
+    }
 }
