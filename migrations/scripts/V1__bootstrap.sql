@@ -1,6 +1,6 @@
 CREATE TABLE shortcut (
     id           BIGSERIAL  NOT NULL PRIMARY KEY,
-    binding      TEXT       NOT NULL,
+    binding      TEXT       NOT NULL UNIQUE,
     description  TEXT       NOT NULL,
     category     TEXT       NOT NULL,
     action       TEXT       NOT NULL
