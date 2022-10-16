@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class EidolonApplication
 
 fun main(args: Array<String>) {
-	runApplication<EidolonApplication>(*args)
+    runApplication<EidolonApplication>(*args)
 }

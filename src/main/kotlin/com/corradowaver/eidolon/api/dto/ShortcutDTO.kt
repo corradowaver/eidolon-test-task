@@ -1,4 +1,7 @@
 package com.corradowaver.eidolon.api.dto
 
-class ShortcutDTO {
-}
+data class ShortcutDTO(
+    val binding: String,
+    val description: String,
+    val action: String
+)
