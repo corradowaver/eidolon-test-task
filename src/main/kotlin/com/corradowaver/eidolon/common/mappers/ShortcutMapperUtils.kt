@@ -5,10 +5,11 @@ import com.corradowaver.eidolon.api.dto.ShortcutResponseDTO
 import com.corradowaver.eidolon.common.models.Shortcut
 import com.corradowaver.eidolon.common.utils.extractAction
 import com.corradowaver.eidolon.common.utils.extractCategory
+import com.corradowaver.eidolon.common.utils.normalizedBinding
 
 fun ShortcutAddRequestDTO.toShortcut() =
     Shortcut(
-        binding = this.binding,
+        binding = this.normalizedBinding(),
         description = this.description,
         category = this.extractCategory(),
         action = this.extractAction()
