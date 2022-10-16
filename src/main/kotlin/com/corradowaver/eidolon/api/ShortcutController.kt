@@ -1,8 +1,8 @@
 package com.corradowaver.eidolon.api
 
-import com.corradowaver.eidolon.api.dto.ShortcutDTO
+import com.corradowaver.eidolon.api.dto.ShortcutAddRequestDTO
 import com.corradowaver.eidolon.api.dto.ShortcutSuccessStatusDTO
-import com.corradowaver.eidolon.common.mappers.toShortcutDTO
+import com.corradowaver.eidolon.common.mappers.toShortcutResponseDTO
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,7 +15,7 @@ class ShortcutController(
 ) {
 
     @PostMapping("/add")
-    fun add(@RequestBody shortcut: ShortcutDTO) =
+    fun add(@RequestBody shortcut: ShortcutAddRequestDTO) =
         shortcutService
             .addShortcut(shortcut)
             .map { ShortcutSuccessStatusDTO(success = it) }
@@ -24,5 +24,5 @@ class ShortcutController(
     fun fetchAllByCategory(@PathVariable("category_name") category: String) =
         shortcutService
             .fetchShortcutByCategory(category)
-            .map { it.toShortcutDTO() }
+            .map { it.toShortcutResponseDTO() }
 }

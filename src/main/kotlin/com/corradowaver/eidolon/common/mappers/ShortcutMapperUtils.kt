@@ -1,12 +1,12 @@
 package com.corradowaver.eidolon.common.mappers
 
-import com.corradowaver.eidolon.api.dto.ShortcutDTO
+import com.corradowaver.eidolon.api.dto.ShortcutAddRequestDTO
+import com.corradowaver.eidolon.api.dto.ShortcutResponseDTO
 import com.corradowaver.eidolon.common.models.Shortcut
-import com.corradowaver.eidolon.common.utils.ACTION_DELIMITER
 import com.corradowaver.eidolon.common.utils.extractAction
 import com.corradowaver.eidolon.common.utils.extractCategory
 
-fun ShortcutDTO.toShortcut() =
+fun ShortcutAddRequestDTO.toShortcut() =
     Shortcut(
         binding = this.binding,
         description = this.description,
@@ -14,9 +14,8 @@ fun ShortcutDTO.toShortcut() =
         action = this.extractAction()
     )
 
-fun Shortcut.toShortcutDTO() =
-    ShortcutDTO(
-        binding = this.binding,
-        description = this.description,
-        action = "${this.category}${ACTION_DELIMITER}${this.action}"
+fun Shortcut.toShortcutResponseDTO() =
+    ShortcutResponseDTO(
+        actionName = this.action,
+        binding = this.binding
     )

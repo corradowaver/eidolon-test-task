@@ -1,6 +1,6 @@
 package com.corradowaver.eidolon.common.validators
 
-import com.corradowaver.eidolon.api.dto.ShortcutDTO
+import com.corradowaver.eidolon.api.dto.ShortcutAddRequestDTO
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.InvalidActionPatternException
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.InvalidBindingPatternException
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.WrongServiceKeyFoundInBindingException
@@ -22,13 +22,13 @@ private val BINDING_REGEX = Regex("([a-zA-Z]+\\s?\\+\\s?){1,3}([A-Z])")
  */
 private val ACTION_REGEX = Regex("([a-z]+\\.[a-z]+)")
 
-fun ShortcutDTO.validate() =
+fun ShortcutAddRequestDTO.validate() =
     this.apply {
         validateBinding()
         validateAction()
     }
 
-private fun ShortcutDTO.validateBinding() {
+private fun ShortcutAddRequestDTO.validateBinding() {
     if (!this.binding.matches(BINDING_REGEX)) throw InvalidBindingPatternException()
     val serviceKeys = this.binding
         .replace(" ", "")
@@ -37,6 +37,6 @@ private fun ShortcutDTO.validateBinding() {
     if (serviceKeys.any { it.uppercase() !in SERVICE_KEYS }) throw WrongServiceKeyFoundInBindingException()
 }
 
-private fun ShortcutDTO.validateAction() {
+private fun ShortcutAddRequestDTO.validateAction() {
     if (!this.action.matches(ACTION_REGEX)) throw InvalidActionPatternException()
 }
