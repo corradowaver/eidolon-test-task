@@ -1,6 +1,7 @@
 package com.corradowaver.eidolon.common.validators
 
 import com.corradowaver.eidolon.api.dto.ShortcutAddRequestDTO
+import com.corradowaver.eidolon.common.validators.ShortcutValidationException.DuplicateServiceKeysInBindingException
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.InvalidActionPatternException
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.InvalidBindingPatternException
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.WrongServiceKeyFoundInBindingException
@@ -40,7 +41,12 @@ private fun ShortcutAddRequestDTO.validateBinding() {
         .replace(" ", "")
         .split(BINDING_DELIMITER)
         .dropLast(1)
-    if (serviceKeys.any { it.uppercase() !in SERVICE_KEYS }) {
+        .map { it.uppercase() }
+    if (serviceKeys.size != serviceKeys.distinct().size) {
+        logger.error("Validation failed for $this, duplicate service keys")
+        throw DuplicateServiceKeysInBindingException()
+    }
+    if (serviceKeys.any { it !in SERVICE_KEYS }) {
         logger.error("Validation failed for $this, wrong service key found in binding")
         throw WrongServiceKeyFoundInBindingException()
     }

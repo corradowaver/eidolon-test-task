@@ -8,5 +8,6 @@ open class ShortcutValidationException(message: String) : RuntimeException(messa
 
     class InvalidBindingPatternException : ShortcutValidationException("Invalid binding pattern.")
     class WrongServiceKeyFoundInBindingException : ShortcutValidationException("Wrong service key found in binding.")
+    class DuplicateServiceKeysInBindingException : ShortcutValidationException("Duplicate service keys found in binding.")
     class InvalidActionPatternException : ShortcutValidationException("Invalid action pattern.")
 }
