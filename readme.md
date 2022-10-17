@@ -1,7 +1,5 @@
 ## Eidolon test task
 
-Task: _https://minio.eidoloncorp.com/custom/hr/test-assignment-scala-backend.html_
-
 ---
 Build & run:
 
