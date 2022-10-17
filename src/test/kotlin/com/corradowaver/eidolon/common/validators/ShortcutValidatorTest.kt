@@ -1,6 +1,7 @@
 package com.corradowaver.eidolon.common.validators
 
 import com.corradowaver.eidolon.api.dto.ShortcutAddRequestDTO
+import com.corradowaver.eidolon.common.validators.ShortcutValidationException.DuplicateServiceKeysInBindingException
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.InvalidActionPatternException
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.InvalidBindingPatternException
 import com.corradowaver.eidolon.common.validators.ShortcutValidationException.WrongServiceKeyFoundInBindingException
@@ -34,8 +35,20 @@ class ShortcutValidatorTest {
 
     @ParameterizedTest
     @MethodSource("wrongServiceKeyShortcutRequests")
-    fun `if shortcut request binding service key is wrong format then WrongServiceKeyFoundInBindingException must be thrown`(shortcut: ShortcutAddRequestDTO) {
+    fun `if shortcut request binding service key is wrong format then WrongServiceKeyFoundInBindingException must be thrown`(
+        shortcut: ShortcutAddRequestDTO
+    ) {
         assertThrows<WrongServiceKeyFoundInBindingException> {
+            shortcut.validate()
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("duplicateServiceKeysShortcutRequests")
+    fun `if shortcut request binding has duplicate service keys then DuplicateServiceKeysInBindingException must be thrown`(
+        shortcut: ShortcutAddRequestDTO
+    ) {
+        assertThrows<DuplicateServiceKeysInBindingException> {
             shortcut.validate()
         }
     }
@@ -62,6 +75,20 @@ class ShortcutValidatorTest {
                 "Ctrl+ Shift +Z",
                 "test description",
                 "git.log"
+            )
+        )
+
+        @JvmStatic
+        fun duplicateServiceKeysShortcutRequests() = listOf(
+            ShortcutAddRequestDTO(
+                "Ctrl + Shift + Ctrl + A",
+                "test description",
+                "git.commit"
+            ),
+            ShortcutAddRequestDTO(
+                "Ctrl + Ctrl + B",
+                "test description",
+                "git.push"
             )
         )
 

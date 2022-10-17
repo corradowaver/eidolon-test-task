@@ -14,6 +14,7 @@ fun singleShortcutRequestDto() =
 
 fun singleShortcut() = Mono.just(
     Shortcut(
+        bindingHash = "",
         binding = "Ctrl + Alt + A",
         description = "test description",
         category = "git",
@@ -23,18 +24,21 @@ fun singleShortcut() = Mono.just(
 
 fun shortcuts() = Flux.just(
     Shortcut(
+        bindingHash = "",
         binding = "Ctrl + Alt + A",
         description = "test description",
         category = "git",
         action = "commit"
     ),
     Shortcut(
+        bindingHash = "",
         binding = "Ctrl + Shift + A",
         description = "test description",
         category = "git",
         action = "push"
     ),
     Shortcut(
+        bindingHash = "",
         binding = "Ctrl + Shift + Alt + A",
         description = "test description",
         category = "git",
