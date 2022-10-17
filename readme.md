@@ -3,17 +3,9 @@
 ---
 Build & run:
 
-* Spin up docker
+* Run using docker-compose
 ```
 docker-compose up -d
-```
-* Do flyway migrations
-```
-./gradlew -Pflyway.configFiles=migrations/environments/test.conf flywayMigrate
-```
-* Run application
-```
-./gradlew bootRun
 ```
 
 ---

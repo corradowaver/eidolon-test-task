@@ -54,7 +54,3 @@ flyway {
     validateMigrationNaming = true
     cleanDisabled = true
 }
-
-tasks.register<org.flywaydb.gradle.task.FlywayMigrateTask>("dbMigrate") {
-    configFiles = arrayOf("migrations/environments/test.conf")
-}
