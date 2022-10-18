@@ -2,7 +2,7 @@ version: "3.4"
 services:
   app:
     build:
-      context: ./src/main/docker
+      context: .
     container_name: app
     depends_on:
       - db
@@ -14,26 +14,22 @@ services:
       - server.error.include-message=always
     ports:
       - 8080:8080
-    links:
-      - db
     networks:
-      - eidolon
+      - eidolon-network
 
   flyway:
     image: flyway/flyway:latest
     container_name: flyway
+    depends_on:
+      - db
     command: -url=jdbc:postgresql://db:5432/eidolon_test_task_db -schemas=public -user=test -password=test -connectRetries=60 migrate
     volumes:
       - ./migrations/scripts:/flyway/sql
-    depends_on:
-      - db
-    links:
-      - db
     networks:
-      - eidolon
+      - eidolon-network
 
   db:
-    image: postgres:latest
+    image: postgres:15.0
     container_name: db
     environment:
       - POSTGRES_USER=test
@@ -42,8 +38,8 @@ services:
     ports:
       - 5432:5432
     networks:
-      - eidolon
+      - eidolon-network
 
 networks:
-  eidolon:
+  eidolon-network:
     driver: bridge

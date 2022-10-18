@@ -3,6 +3,11 @@
 ---
 Build & run:
 
+* Build jar
+```
+./gradlew bootJar
+```
+
 * Run using docker-compose
 ```
 docker-compose up -d
