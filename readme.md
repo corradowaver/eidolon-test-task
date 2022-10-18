@@ -13,6 +13,8 @@ Build & run:
 docker-compose up -d
 ```
 
+* Application is listening at port 8081
+
 ---
 
 REST Endpoints: 
