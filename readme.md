@@ -1,5 +1,8 @@
 ## Eidolon test task
 
+Preconditions:
+* Installed jdk-11
+* Installed docker
 ---
 Build & run:
 
